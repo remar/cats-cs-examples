@@ -10,6 +10,7 @@ namespace catscsexamples {
 			CatsExample example = new CatsExample ();
 			example.Setup ();
 
+
 			SDL.SDL_Event Event;
 			bool running = true;
 			while (running) {
@@ -22,6 +23,7 @@ namespace catscsexamples {
 						}
 					}
 				}
+				example.Redraw ();
 			}
 
 			example.Quit ();
@@ -33,6 +35,11 @@ namespace catscsexamples {
 			SDL.SDL_Init (SDL.SDL_INIT_VIDEO);
 			cats = new Cats ();
 			cats.Init (640, 480);
+			cats.SetBackgroundColor (0xff, 0x00, 0x80);
+		}
+
+		public void Redraw() {
+			cats.Redraw ();
 		}
 
 		public void Quit() {
