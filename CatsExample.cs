@@ -16,6 +16,10 @@ namespace catscsexamples {
 				while (SDL.SDL_PollEvent(out Event) != 0) {
 					if (Event.type == SDL.SDL_EventType.SDL_QUIT) {
 						running = false;
+					} else if(Event.type == SDL.SDL_EventType.SDL_KEYDOWN) {
+						if(Event.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE) {
+							running = false;
+						}
 					}
 				}
 			}
