@@ -42,6 +42,7 @@ namespace catscsexamples {
 			cats.SetBackgroundColor (0xff, 0x00, 0x80);
 			cats.LoadSprite ("../../data/sprite.json");
 			spriteId = cats.CreateSpriteInstance ("sprite");
+			cats.SetAnimation (spriteId, "walk right");
 		}
 
 		public void Update() {
@@ -52,9 +53,11 @@ namespace catscsexamples {
 			if (pos >= 640 - 16 && dx > 0) {
 				pos = 640 - 16;
 				dx = -dx;
+				cats.SetAnimation (spriteId, "walk left");
 			} else if (pos <= 0 && dx < 0) {
 				pos = 0;
 				dx = -dx;
+				cats.SetAnimation (spriteId, "walk right");
 			}
 			cats.SetSpritePosition (spriteId, (int)pos, 200);
 			Redraw (delta);

@@ -1,8 +1,19 @@
 {
     "animations": {
-        "walk": {
+        "walk right": {
             "image": {
-                 "path":"walk.png",
+                 "path":"walk_right.png",
+                 "width":16,
+                 "height":24
+             },
+             "looping": true,
+             "frames": [
+                 [0, 100], [1, 150], [2, 100], [1, 150]
+             ]
+        },
+        "walk left": {
+            "image": {
+                 "path":"walk_left.png",
                  "width":16,
                  "height":24
              },
