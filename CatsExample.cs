@@ -9,6 +9,7 @@ namespace catscsexamples {
 		private uint lastFrameTime = SDL.SDL_GetTicks();
 		private float pos = 0;
 		private float dx = 100f;
+		private bool visible = true;
 
 		public static int Main() {
 			CatsExample example = new CatsExample ();
@@ -21,8 +22,10 @@ namespace catscsexamples {
 					if (Event.type == SDL.SDL_EventType.SDL_QUIT) {
 						running = false;
 					} else if(Event.type == SDL.SDL_EventType.SDL_KEYDOWN) {
-						if(Event.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE) {
+						if (Event.key.keysym.sym == SDL.SDL_Keycode.SDLK_ESCAPE) {
 							running = false;
+						} else if (Event.key.keysym.sym == SDL.SDL_Keycode.SDLK_h) {
+							example.ToggleVisibility ();
 						}
 					}
 				}
@@ -61,6 +64,11 @@ namespace catscsexamples {
 			}
 			cats.SetSpritePosition (spriteId, (int)pos, 200);
 			Redraw (delta);
+		}
+
+		void ToggleVisibility () {
+			visible = !visible;
+			cats.ShowSprite (spriteId, visible);
 		}
 
 		public void Redraw(float delta) {
