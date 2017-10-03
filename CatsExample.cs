@@ -4,12 +4,13 @@ using cats;
 
 namespace catscsexamples {
 	public class CatsExample {
-		Cats cats;
+		private Cats cats;
+		private int spriteId;
+		private uint lastFrameTime = SDL.SDL_GetTicks();
 
 		public static int Main() {
 			CatsExample example = new CatsExample ();
 			example.Setup ();
-
 
 			SDL.SDL_Event Event;
 			bool running = true;
@@ -36,10 +37,14 @@ namespace catscsexamples {
 			cats = new Cats ();
 			cats.Init (640, 480);
 			cats.SetBackgroundColor (0xff, 0x00, 0x80);
+			cats.LoadSprite ("../../data/sprite.json");
+			spriteId = cats.CreateSpriteInstance ("sprite");
 		}
 
 		public void Redraw() {
-			cats.Redraw ();
+			float delta = (SDL.SDL_GetTicks () - lastFrameTime)/1000.0f;
+			lastFrameTime = SDL.SDL_GetTicks ();
+			cats.Redraw (delta);
 		}
 
 		public void Quit() {

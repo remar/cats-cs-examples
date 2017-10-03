@@ -1,0 +1,15 @@
+{
+    "animations": {
+        "walk": {
+            "image": {
+                 "path":"walk.png",
+                 "width":16,
+                 "height":24
+             },
+             "looping": true,
+             "frames": [
+                 [0, 100], [1, 150], [2, 100], [1, 150]
+             ]
+        }
+    }
+}
