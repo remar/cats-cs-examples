@@ -5,10 +5,10 @@ using cats;
 namespace catscsexamples {
 	public class CatsExample {
 		private Cats cats;
-		private int spriteId;
+		private int spriteId = -1;
 		private uint lastFrameTime = SDL.SDL_GetTicks();
 		private float pos = 0;
-		private float dx = 100f;
+		private float dx;
 		private bool visible = true;
 
 		public static int Main() {
@@ -26,6 +26,10 @@ namespace catscsexamples {
 							running = false;
 						} else if (Event.key.keysym.sym == SDL.SDL_Keycode.SDLK_h) {
 							example.ToggleVisibility ();
+						} else if (Event.key.keysym.sym == SDL.SDL_Keycode.SDLK_r) {
+							example.RemoveSpriteInstance ();
+						} else if (Event.key.keysym.sym == SDL.SDL_Keycode.SDLK_c) {
+							example.CreateSpriteInstance ();
 						}
 					}
 				}
@@ -44,31 +48,50 @@ namespace catscsexamples {
 			cats.Init (640, 480);
 			cats.SetBackgroundColor (0xff, 0x00, 0x80);
 			cats.LoadSprite ("../../data/sprite.json");
-			spriteId = cats.CreateSpriteInstance ("sprite");
-			cats.SetAnimation (spriteId, "walk right");
+			CreateSpriteInstance ();
 		}
 
 		public void Update() {
 			float delta = (SDL.SDL_GetTicks () - lastFrameTime)/1000.0f;
 			lastFrameTime = SDL.SDL_GetTicks ();
 
-			pos += dx * delta;
-			if (pos >= 640 - 16 && dx > 0) {
-				pos = 640 - 16;
-				dx = -dx;
-				cats.SetAnimation (spriteId, "walk left");
-			} else if (pos <= 0 && dx < 0) {
-				pos = 0;
-				dx = -dx;
-				cats.SetAnimation (spriteId, "walk right");
+			if (spriteId != -1) {
+				pos += dx * delta;
+				if (pos >= 640 - 16 && dx > 0) {
+					pos = 640 - 16;
+					dx = -dx;
+					cats.SetAnimation (spriteId, "walk left");
+				} else if (pos <= 0 && dx < 0) {
+					pos = 0;
+					dx = -dx;
+					cats.SetAnimation (spriteId, "walk right");
+				}
+				cats.SetSpritePosition (spriteId, (int)pos, 200);
 			}
-			cats.SetSpritePosition (spriteId, (int)pos, 200);
 			Redraw (delta);
 		}
 
 		void ToggleVisibility () {
-			visible = !visible;
-			cats.ShowSprite (spriteId, visible);
+			if (spriteId != -1) {
+				visible = !visible;
+				cats.ShowSprite (spriteId, visible);
+			}
+		}
+
+		void RemoveSpriteInstance () {
+			if (spriteId != -1) {
+				cats.RemoveSpriteInstance (spriteId);
+			}
+			spriteId = -1;
+		}
+
+		void CreateSpriteInstance () {
+			if (spriteId == -1) {
+				spriteId = cats.CreateSpriteInstance ("sprite");
+				cats.SetAnimation (spriteId, "walk right");
+				pos = 0;
+				dx = 100f;
+			}
 		}
 
 		public void Redraw(float delta) {
