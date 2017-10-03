@@ -7,6 +7,8 @@ namespace catscsexamples {
 		private Cats cats;
 		private int spriteId;
 		private uint lastFrameTime = SDL.SDL_GetTicks();
+		private float pos = 0;
+		private float dx = 100f;
 
 		public static int Main() {
 			CatsExample example = new CatsExample ();
@@ -24,7 +26,8 @@ namespace catscsexamples {
 						}
 					}
 				}
-				example.Redraw ();
+				example.Update ();
+				SDL.SDL_Delay (5);
 			}
 
 			example.Quit ();
@@ -41,9 +44,23 @@ namespace catscsexamples {
 			spriteId = cats.CreateSpriteInstance ("sprite");
 		}
 
-		public void Redraw() {
+		public void Update() {
 			float delta = (SDL.SDL_GetTicks () - lastFrameTime)/1000.0f;
 			lastFrameTime = SDL.SDL_GetTicks ();
+
+			pos += dx * delta;
+			if (pos >= 640 - 16 && dx > 0) {
+				pos = 640 - 16;
+				dx = -dx;
+			} else if (pos <= 0 && dx < 0) {
+				pos = 0;
+				dx = -dx;
+			}
+			cats.SetSpritePosition (spriteId, (int)pos, 200);
+			Redraw (delta);
+		}
+
+		public void Redraw(float delta) {
 			cats.Redraw (delta);
 		}
 
