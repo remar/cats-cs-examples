@@ -46,7 +46,16 @@ namespace catscsexamples {
 			SDL.SDL_Init (SDL.SDL_INIT_VIDEO);
 			cats = new Cats ();
 			cats.Init (640, 480);
-			cats.SetBackgroundColor (0xff, 0x00, 0x80);
+			cats.SetBackgroundColor (0x30, 0x00, 0x30);
+			cats.SetupTileLayer (20, 15, 32, 32);
+			cats.LoadTileset ("../../data/tiles.json");
+			for (int y = 0; y < 15; y++) {
+				for (int x = 0; x < 20; x++) {
+					if (y != 6) {
+						cats.SetTile (x, y, "tiles", 0, 0);
+					}
+				}
+			}
 			cats.LoadSprite ("../../data/sprite.json");
 			CreateSpriteInstance ();
 		}
