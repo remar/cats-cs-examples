@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Reflection;
 using SDL2;
 using cats;
 
@@ -12,6 +14,9 @@ namespace catscsexamples {
 		private bool visible = true;
 
 		public static int Main() {
+			// Make sure current dir is correct
+			Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
+
 			CatsExample example = new CatsExample ();
 			example.Setup ();
 
