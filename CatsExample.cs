@@ -34,7 +34,6 @@ namespace catscsexamples {
 					}
 				}
 				example.Update ();
-				SDL.SDL_Delay (5);
 			}
 
 			example.Quit ();
@@ -48,7 +47,7 @@ namespace catscsexamples {
 			cats.Init (640, 480);
 			cats.SetBackgroundColor (0x30, 0x00, 0x30);
 			cats.SetupTileLayer (40, 15, 32, 32);
-			cats.LoadTileset ("../../data/tiles.json");
+			cats.LoadTileset ("data/tiles.json");
 			for (int y = 0; y < 15; y++) {
 				for (int x = 0; x < 40; x++) {
 					if (y != 6) {
@@ -56,7 +55,7 @@ namespace catscsexamples {
 					}
 				}
 			}
-			cats.LoadSprite ("../../data/sprite.json");
+			cats.LoadSprite ("data/sprite.json");
 			CreateSpriteInstance ();
 		}
 
