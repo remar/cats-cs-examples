@@ -6,7 +6,6 @@ using cats;
 
 namespace catscsexamples {
 	public class CatsExample {
-		private Cats cats;
 		private int spriteId = -1;
 		private uint lastFrameTime = SDL.SDL_GetTicks();
 		private float pos = 0;
@@ -48,19 +47,18 @@ namespace catscsexamples {
 
 		public void Setup() {
 			SDL.SDL_Init (SDL.SDL_INIT_VIDEO);
-			cats = new Cats ();
-			cats.Init (640, 480);
-			cats.SetBackgroundColor (0x30, 0x00, 0x30);
-			cats.SetupTileLayer (40, 15, 32, 32);
-			cats.LoadTileset ("data/tiles.json");
+			Cats.Init (640, 480);
+			Cats.SetBackgroundColor (0x30, 0x00, 0x30);
+			Cats.SetupTileLayer (40, 15, 32, 32);
+			Cats.LoadTileset ("data/tiles.json");
 			for (int y = 0; y < 15; y++) {
 				for (int x = 0; x < 40; x++) {
 					if (y != 6) {
-						cats.SetTile (x, y, "tiles", 0, 0);
+						Cats.SetTile (x, y, "tiles", 0, 0);
 					}
 				}
 			}
-			cats.LoadSprite ("data/sprite.json");
+			Cats.LoadSprite ("data/sprite.json");
 			CreateSpriteInstance ();
 		}
 
@@ -73,43 +71,43 @@ namespace catscsexamples {
 				if (pos >= 640 - 16 && dx > 0) {
 					pos = 640 - 16;
 					dx = -dx;
-					cats.SetAnimation (spriteId, "walk left");
+					Cats.SetAnimation (spriteId, "walk left");
 				} else if (pos <= 0 && dx < 0) {
 					pos = 0;
 					dx = -dx;
-					cats.SetAnimation (spriteId, "walk right");
+					Cats.SetAnimation (spriteId, "walk right");
 				}
-				cats.SetSpritePosition (spriteId, (int)pos, 200);
+				Cats.SetSpritePosition (spriteId, (int)pos, 200);
 			}
-			cats.SetScroll (-(int)pos, 0);
+			Cats.SetScroll (-(int)pos, 0);
 			Redraw (delta);
 		}
 
 		void ToggleVisibility () {
 			if (spriteId != -1) {
 				visible = !visible;
-				cats.ShowSprite (spriteId, visible);
+				Cats.ShowSprite (spriteId, visible);
 			}
 		}
 
 		void RemoveSpriteInstance () {
 			if (spriteId != -1) {
-				cats.RemoveSpriteInstance (spriteId);
+				Cats.RemoveSpriteInstance (spriteId);
 			}
 			spriteId = -1;
 		}
 
 		void CreateSpriteInstance () {
 			if (spriteId == -1) {
-				spriteId = cats.CreateSpriteInstance ("sprite");
-				cats.SetAnimation (spriteId, "walk right");
+				spriteId = Cats.CreateSpriteInstance ("sprite");
+				Cats.SetAnimation (spriteId, "walk right");
 				pos = 0;
 				dx = 100f;
 			}
 		}
 
 		public void Redraw(float delta) {
-			cats.Redraw (delta);
+			Cats.Redraw (delta);
 		}
 
 		public void Quit() {
